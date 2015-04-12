@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412074313) do
+ActiveRecord::Schema.define(version: 20150412115011) do
+
+  create_table "bad_cards", force: :cascade do |t|
+    t.integer  "merchant_id"
+    t.string   "card"
+    t.string   "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "bad_cards", ["merchant_id"], name: "index_bad_cards_on_merchant_id"
 
   create_table "investor_offers", force: :cascade do |t|
     t.integer  "investor_id"
@@ -77,6 +87,7 @@ ActiveRecord::Schema.define(version: 20150412074313) do
   add_index "processed_payments", ["payment_id"], name: "index_processed_payments_on_payment_id", unique: true
 
   create_table "users", force: :cascade do |t|
+    t.text     "password_digest"
     t.text     "name"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
@@ -90,6 +101,9 @@ ActiveRecord::Schema.define(version: 20150412074313) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "merchant_identifier"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

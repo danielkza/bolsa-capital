@@ -1,31 +1,196 @@
-<p id="notice"><%= notice %></p>
+<section class="wrapper site-min-height">
 
-<h1>Listing Investors</h1>
+    <div class="row mt">
+    <div class="col-lg-12">
+                <div class="form-panel">                                
+            <div data-role="main" class="ui-content">
+          <div class="col-lg-6">
+            <div data-role="rangeslider">
+        <label for="price-min"><strong>Faturamento total (mil):</strong></label>
+        <input type="range" name="price-min" id="price-min" value="200" min="0" max="10000">
+        <label for="price-max"><strong>Faturamento total (mil):</strong></label>
+        <input type="range" name="price-max" id="price-max" value="4000" min="0" max="10000">
+      </div></div>
+    <div class="col-lg-6">
+    <div data-role="rangeslider">
+        <label for="price-min"><strong>Movimento no cartão (mil):</strong></label>
+        <input type="range" name="price-min" id="price-min" value="200" min="0" max="10000">
+        <label for="price-max"><strong>Movimento no cartão (mil):</strong></label>
+        <input type="range" name="price-max" id="price-max" value="4000" min="0" max="10000">
+      </div></div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th>Owner</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @investors.each do |investor| %>
-      <tr>
-        <td><%= investor.name %></td>
-        <td><%= investor.code %></td>
-        <td><%= investor.owner %></td>
-        <td><%= link_to 'Show', user_investor_path(@user, investor) %></td>
-        <td><%= link_to 'Edit', edit_user_investor_path(@user, investor) %></td>
-        <td><%= link_to 'Destroy', user_investor_path(@user, investor), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="col-lg-6">
+            <div data-role="rangeslider">
+        <label for="price-min"><strong>Prazo (dias):</strong></label>
+        <input type="range" name="price-min" id="price-min" value="30" min="0" max="200">
+        <label for="price-max"><strong>Prazo (dias):</strong></label>
+        <input type="range" name="price-max" id="price-max" value="90" min="0" max="200">
+      </div></div>
+    <div class="col-lg-6">
+    <div data-role="rangeslider">
+        <label for="price-min"><strong>Valor da Carteira (mil):</strong></label>
+        <input type="range" name="price-min" id="price-min" value="200" min="0" max="10000">
+        <label for="price-max"><strong>Valor da Carteira (mil):</strong></label>
+        <input type="range" name="price-max" id="price-max" value="3000" min="0" max="10000">
+      </div></div>
 
-<br>
+  </div>
 
-<%= link_to 'New Investor', new_user_investor_path(@user) %>
+            
+            <div class="col-lg-6">
+            <select class="form-control">
+              <option>Ramo de Atividade</option>
+              <option>Artigos esportivos</option>
+              <option>Bares</option>
+              <option>Bebidas</option>
+              <option>Brinquedos</option> 
+              <option>Computadores</option> 
+              <option>Equipamentos Industriais</option>
+              <option>Hotelaria</option>
+              <option>Internet</option>
+              <option>Imobiliarias</option>
+              <option>Restaurantes</option>
+              <option>Varejo</option>
+            </select>
+            </div>
+            <div class="col-lg-6">
+            <select class="form-control">
+              <option>Estado</option>
+              <option>Acre</option>
+              <option>Alagoas</option>
+              <option>Amapá</option>
+              <option>Amazonas</option>
+              <option>Bahia</option>  
+              <option>Ceará</option>  
+              <option>Espirito Santo</option>
+              <option>Goiás</option>
+              <option>Mato Grosso</option>
+              <option>Minas Gerais</option>             
+            </select>
+            </div>
+            <br/><br/><hr>
+        
+        
+        
+                </div><!-- /form-panel -->
+              </div><!-- /col-lg-12 -->
+
+    <br/><br/>
+
+                  <div class="col-md-12">
+                      <div class="content-panel">
+                          <table class="table table-striped table-advance table-hover">
+                            
+                              <thead>
+                              <tr>
+                                  <th><i class="fa fa-bullhorn"></i> Empresa</th>
+                                  <th class="hidden-phone"><i class="fa fa-question-circle"></i> Atividade</th>
+           <th><i class=" fa fa-globe"></i> Estado</th>
+        <th><i class="fa fa-money"></i> Faturamento/Ano</th>
+                                  <th><i class="fa fa-credit-card"></i> Carteira Recebíveis</th>
+                                  <th><i class=" fa fa-edit"></i> Prazo Médio</th>
+                                 
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                  <td><a href="basic_table.html#">Ponto do Pão</a></td>
+                                  <td class="hidden-phone">Padaria</td>
+           <td>São Paulo </td>
+        <td>R$ 320.000 </td>
+                                  <td>R$ 120.000 </td>
+                                  <td><span class="label label-danger label-mini">92 dias</span></td>
+                                 
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <a href="basic_table.html#">
+                                          Casa da Esfiha
+                                      </a>
+                                  </td>
+                                  <td class="hidden-phone">Restaurante</td>
+        <td>Santa Catarina </td>
+           <td>R$ 450.000 </td>
+                                  <td>R$ 250.000 </td>
+                                  <td><span class="label label-warning label-mini">65 dias</span></td>
+                                
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <a href="basic_table.html#">
+                                          Centauro
+                                      </a>
+                                  </td>
+                                  <td class="hidden-phone">Materiais Esportivos</td>
+        <td>Rio de Janeiro </td>
+          <td>R$ 4.300.000 </td>
+                                  <td>R$ 1.300.000 </td>
+                                  <td><span class="label label-success label-mini">25 dias</span></td>
+                                 
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <a href="basic_table.html#">
+                                          Americanas
+                                      </a>
+                                  </td>
+                                  <td class="hidden-phone">Varejo Online</td>
+          <td>São Paulo</td>
+           <td>R$ 15.203.000 </td>
+                                  <td>R$ 4.203.000 </td>
+                                  <td><span class="label label-success label-mini">45 dias</span></td>
+                                  
+                              </tr>
+                              <tr>
+                                  <td><a href="basic_table.html#">Granja Viana</a></td>
+                                  <td class="hidden-phone">Produção de Alimentos</td>
+          <td>Minas Gerais </td>
+            <td>R$ 2.550.000 </td>
+                                  <td>R$ 750.000 </td>
+                                  <td><span class="label label-warning label-mini">60 dias</span></td>
+                                 
+                              </tr>
+    
+        <tr>
+                                  <td><a href="basic_table.html#">Pão de Açucar</a></td>
+                                  <td class="hidden-phone">Varejo de Alimentos</td>
+          <td>São Paulo </td>
+            <td>R$ 22.550.000 </td>
+                                  <td>R$ 5.750.000 </td>
+                                  <td><span class="label label-success label-mini">20 dias</span></td>
+                                 
+                              </tr>
+
+        <tr>
+                                  <td><a href="basic_table.html#">Dpaschoal</a></td>
+                                  <td class="hidden-phone">Serviços Automotivos</td>
+          <td>Paraná </td>
+            <td>R$ 2.550.000 </td>
+                                  <td>R$ 950.000 </td>
+                                  <td><span class="label label-success label-mini">28 dias</span></td>
+                                 
+                              </tr>
+
+        <tr>
+                                  <td><a href="basic_table.html#">Apple</a></td>
+                                  <td class="hidden-phone">Computadores</td>
+          <td>São Paulo </td>
+            <td>R$ 32.550.000 </td>
+                                  <td>R$ 13.331.000 </td>
+                                  <td><span class="label label-warning label-mini">55 dias</span></td>
+                                 
+                              </tr>
+
+
+
+                              </tbody>
+                          </table>
+                      </div><!-- /content-panel -->
+                  </div><!-- /col-md-12 -->
+              </div><!-- /row -->
+
+
+  
+          </section>
+      </section>

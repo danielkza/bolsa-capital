@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root 'home#index'
 
+  get 'index_investor' => 'home#index_banco'
+  get 'perfil' => 'home#perfil'
+
   devise_for :users
   resources :users do
     resources :investors
