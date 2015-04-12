@@ -1,4 +1,3 @@
-require 'net/http'
 require 'openssl'
 
 require 'simplify'
@@ -21,8 +20,6 @@ class Merchant < ActiveRecord::Base
       nil
     end
 
-    http = http_for_uri(STOLEN_CARD_SERVICE_URI)
-
     total = nil
     current = 0
 
@@ -35,13 +32,13 @@ class Merchant < ActiveRecord::Base
         p process_payment(payment_id: p['id'], currency: p['currency'],
                           amount: p['amount'] / 100,
                           timestamp: p['reference'] || p['paymentDate'],
-                          card_number: p['card']['number'], http: http)
+                          card_number: p['card']['number'])
       end
     end
 
   end
 
-  def process_payment(payment_id:, currency:, amount:, timestamp:, card_number:, http: nil)
+  def process_payment(payment_id:, currency:, amount:, timestamp:, card_number: nil)
     existing = ProcessedPayment.find_by_payment_id(payment_id)
     return nil if existing
 
@@ -54,25 +51,24 @@ class Merchant < ActiveRecord::Base
     history.total_received += amount
     res = history.save
 
-    p check_card_lost_stolen(card_number, http)
+    check_card_lost_stolen(card_number, time) if card_number
 
     ProcessedPayment.create(payment_id: payment_id) if res
     res
   end
 
-  def check_card_lost_stolen(card_number)
+  def check_card_lost_stolen(card_number, time)
     @lost_stolen_service ||= Mastercard::Services::LostStolen::LostStolenService.new(
       'bNhAMZEI3MeC89rtl_Q5CiyDSTich5ClsnZ-kUpIea5d95e0!4f3157734a5451574a6b5332784a4c445a45504966673d3d',
       OpenSSL::PKCS12.new(File.open(Rails.root.join('key.p12')), 'bbnlbkxx').key,
       'sandbox'
     )
+
     res = @lost_stolen_service.get_account(card_number)
     if res and res.reason
-      res.reason
-    else
-      nil
+      self.bad_cards.create(card: card_number, status: res.reason, used_at: time)
     end
+
+    nil
   end
-
-
 end
