@@ -4,9 +4,6 @@ require 'rails/all'
 
 require 'simplify'
 
-Simplify::public_key = "YOUR_PUBLIC_API_KEY"
-Simplify::private_key = "YOUR_PRIVATE_API_KEY"
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
