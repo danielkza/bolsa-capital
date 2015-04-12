@@ -1,4 +1,4 @@
-<%= form_for(@merchant) do |f| %>
+<%= form_for(@merchant, url: user_merchant_path(@user, @merchant)) do |f| %>
   <% if @merchant.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@merchant.errors.count, "error") %> prohibited this merchant from being saved:</h2>
@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :owner %><br>
-    <%= f.text_field :owner %>
+    <%= f.select(:owner_id, users_with_ids) %>
   </div>
   <div class="field">
     <%= f.label :address %><br>
