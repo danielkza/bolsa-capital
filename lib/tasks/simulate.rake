@@ -7,7 +7,7 @@ namespace :simulate do
 		Simplify::public_key = "sbpb_N2YyMWMwNmMtNGRiOS00MjBhLTk1NzAtNTQ4NGEzZGUwNDUy"
 		Simplify::private_key = "ERInD4vAyClXX8LVfMVRBqAKpj5teXHGsfWzcNRT0b15YFFQL0ODSXAOkNtXTToq"
 
-		new_payment("5105105105105100", 1500)
+		new_payment("5105105105105100", 2756)
   end
 
   task :populate do
@@ -35,7 +35,7 @@ namespace :simulate do
             "expYear" => 15,
             "cvc" => "123"
         },
-        "paymentDate" => (Time.new(2015, 4, 10, 2, 2, 2, "+02:00").to_i * 1000),
+        "reference" => (Time.new(2015, 4, 10, 2, 2, 2, "+02:00").utc.to_i * 1000),
         "amount" => amount,
         "currency"  => "BRL",
         "description" => "New payment to the merchant"
