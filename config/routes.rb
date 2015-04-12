@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'index' => 'home#index'
   get 'index_investor' => 'home#index_banco'
   get 'perfil' => 'home#perfil'
+  get 'empresa' => 'home#empresa'
 
   devise_for :users
   resources :users do

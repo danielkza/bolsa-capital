@@ -22,6 +22,8 @@
     <link rel="stylesheet" type="text/css" href="/assets/lineicons/style.css">   
 <link rel="stylesheet" href="//cdn.oesmith.co.uk/morris-0.4.3.min.css">  
 
+<script src="//cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+
   <!-- Ionicons -->
     <link href="//code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Ion Slider -->
@@ -202,8 +204,7 @@
             </div>
             <div class="top-menu">
               <ul class="nav pull-right top-menu">
-                    <% if user_signed_in? %>
-                      Logged in as <strong><%= current_user.email %></strong>.
+                    <% if !user_signed_in? %>
                       <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link logout'  %></li>
                     <% else %>
                       <li><%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link logout'  %></li>
@@ -361,7 +362,8 @@
                               </thead>
                               <tbody>
                               <tr>
-                                  <td><a href="basic_table.html#">Ponto do Pão</a></td>
+                                        
+                                  <td><%= link_to "Ponto do Pão", :controller => "home", :action => "empresa" %></td>
                                   <td class="hidden-phone">Padaria</td>
            <td>São Paulo </td>
         <td>R$ 320.000 </td>
@@ -486,7 +488,6 @@
 
     <!--common script for all pages-->
   <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-  <script src="//cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="/assets/js/common-scripts.js"></script>
     <!--script for this page-->
     <script src="/assets/js/morris-conf.js"></script>
