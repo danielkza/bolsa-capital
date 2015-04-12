@@ -1,9 +1,10 @@
 require 'net/http'
+require 'openssl'
+
 require 'simplify'
+require 'mastercard/services/lost_stolen/LostStolenService'
 
 class Merchant < ActiveRecord::Base
-  STOLEN_CARD_SERVICE_URI = URI('http://dmartin.org:8011/fraud/loststolen/v1/account-inquiry?Format=XML')
-
   belongs_to :owner, class_name: 'User'
   has_many :payment_histories
   has_many :offers, class_name: "MerchantOffer"
@@ -13,31 +14,14 @@ class Merchant < ActiveRecord::Base
   validates_associated :owner
   validates_uniqueness_of :code
 
-  def check_card_lost_stolen(card_number, http)
-    req = Net::HTTP::Post.new(STOLEN_CARD_SERVICE_URI)
-    req.set_content_type('application/xml')
-    req.body = <<-XML
-<AccountInquiry>
-	<AccountNumber>#{card_number}</AccountNumber>
-</AccountInquiry>
-XML
-    res = http.request(req)
-    p res.body
-    if res.code.to_i >= 200 && res.code.to_i < 300
-      reason = res.body.match(/<Reason>(.+?)<\/Reason>/).captures.first
-      p reason
-      return reason
-    end
-
-    nil
-  end
-
   def process_all_payments!
     auth = if access_token
       Simplify::Authentication(access_token) if access_token
     else
       nil
     end
+
+    http = http_for_uri(STOLEN_CARD_SERVICE_URI)
 
     total = nil
     current = 0
@@ -49,8 +33,9 @@ XML
 
       res['list'].each do |p|
         p process_payment(payment_id: p['id'], currency: p['currency'],
-          amount: p['amount'] / 100, timestamp: p['paymentDate'],
-          card_number: p['card']['number'])
+                          amount: p['amount'] / 100,
+                          timestamp: p['reference'] || p['paymentDate'],
+                          card_number: p['card']['number'], http: http)
       end
     end
 
@@ -69,11 +54,25 @@ XML
     history.total_received += amount
     res = history.save
 
-    http ||= Net::HTTP.new(STOLEN_CARD_SERVICE_URI.host,
-                           STOLEN_CARD_SERVICE_URI.port)
     p check_card_lost_stolen(card_number, http)
 
     ProcessedPayment.create(payment_id: payment_id) if res
     res
   end
+
+  def check_card_lost_stolen(card_number)
+    @lost_stolen_service ||= Mastercard::Services::LostStolen::LostStolenService.new(
+      'bNhAMZEI3MeC89rtl_Q5CiyDSTich5ClsnZ-kUpIea5d95e0!4f3157734a5451574a6b5332784a4c445a45504966673d3d',
+      OpenSSL::PKCS12.new(File.open(Rails.root.join('key.p12')), 'bbnlbkxx').key,
+      'sandbox'
+    )
+    res = @lost_stolen_service.get_account(card_number)
+    if res and res.reason
+      res.reason
+    else
+      nil
+    end
+  end
+
+
 end
