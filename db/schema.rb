@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412115011) do
+ActiveRecord::Schema.define(version: 20150412133526) do
 
   create_table "bad_cards", force: :cascade do |t|
     t.integer  "merchant_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150412115011) do
     t.string   "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "used_at"
   end
 
   add_index "bad_cards", ["merchant_id"], name: "index_bad_cards_on_merchant_id"
