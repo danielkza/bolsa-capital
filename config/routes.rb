@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  # root 'index.html'
 
-  get 'index' => 'home#index'
+  get 'cliente' => 'home#cliente'
   get 'index_investor' => 'home#index_banco'
   get 'perfil' => 'home#perfil'
   get 'empresa' => 'home#empresa'
