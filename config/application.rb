@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
 require 'simplify'
 
 # Require the gems listed in Gemfile, including any gems
@@ -25,4 +24,7 @@ module PerfilDoLojista
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
+
+  Simplify::public_key = "sbpb_N2YyMWMwNmMtNGRiOS00MjBhLTk1NzAtNTQ4NGEzZGUwNDUy"
+  Simplify::private_key = "ERInD4vAyClXX8LVfMVRBqAKpj5teXHGsfWzcNRT0b15YFFQL0ODSXAOkNtXTToq"
 end

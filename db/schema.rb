@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412003100) do
+ActiveRecord::Schema.define(version: 20150412043140) do
+
+  create_table "investor_offers", force: :cascade do |t|
+    t.integer  "investor_id"
+    t.integer  "merchant_offer_id"
+    t.decimal  "fee"
+    t.datetime "accepted_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "investor_offers", ["investor_id"], name: "index_investor_offers_on_investor_id"
+  add_index "investor_offers", ["merchant_offer_id"], name: "index_investor_offers_on_merchant_offer_id"
 
   create_table "investors", force: :cascade do |t|
     t.string   "name"
@@ -21,13 +33,28 @@ ActiveRecord::Schema.define(version: 20150412003100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "merchant_offers", force: :cascade do |t|
+    t.integer  "merchant_id"
+    t.decimal  "amount"
+    t.datetime "starts"
+    t.datetime "ends"
+    t.datetime "accepted_at"
+    t.datetime "repaid_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "merchant_offers", ["merchant_id"], name: "index_merchant_offers_on_merchant_id"
+
   create_table "merchants", force: :cascade do |t|
     t.string   "name"
     t.text     "code"
     t.integer  "owner_id"
     t.text     "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.decimal  "revenue"
+    t.string   "access_token"
   end
 
   create_table "payment_histories", force: :cascade do |t|
@@ -37,10 +64,17 @@ ActiveRecord::Schema.define(version: 20150412003100) do
     t.decimal  "total_received"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "currency"
   end
 
+  add_index "payment_histories", ["currency", "month", "year"], name: "index_payment_histories_on_currency_and_month_and_year", unique: true
   add_index "payment_histories", ["merchant_id"], name: "index_payment_histories_on_merchant_id"
-  add_index "payment_histories", ["month", "year"], name: "index_payment_histories_on_month_and_year", unique: true
+
+  create_table "processed_payments", id: false, force: :cascade do |t|
+    t.string "payment_id", null: false
+  end
+
+  add_index "processed_payments", ["payment_id"], name: "index_processed_payments_on_payment_id", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
