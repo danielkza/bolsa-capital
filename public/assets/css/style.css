@@ -19,6 +19,8 @@ body {
     font-size:13px;
 }
 
+
+
 ul li {
     list-style: none;
 }
@@ -524,7 +526,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended li p.green {
-    background-color: #68dff0;
+    background-color: #424a5d;
     color: #fff;
 }
 
@@ -728,9 +730,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     border-top-color: #FCB322 !important;
 }
 .notify-arrow-green {
-    border-color: transparent transparent #68dff0;
-    border-bottom-color: #68dff0 !important;
-    border-top-color: #68dff0 !important;
+    border-color: transparent transparent #424a5d;
+    border-bottom-color: #424a5d !important;
+    border-top-color: #424a5d !important;
 }
 
 
